@@ -1,0 +1,144 @@
+/**垂直居中 */
+@mixin flex_align {
+  display: flex;
+  align-items: center;
+}
+
+/**文字产出部分显示... */
+@mixin text_hidden {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/**文本缩进 */
+@mixin text_indent {
+  display: inline-block;
+  text-indent: 10px;
+}
+
+/* 全局滚动条样式*/
+@mixin scroll {
+
+  /* 修改滚动条样式 */
+  &::-webkit-scrollbar {
+    /* width height分别对应竖向滚动条和横向滚动条 */
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+  }
+
+  /* 修改滚动条中的小滑块 */
+  &::-webkit-scrollbar-thumb {
+    width: 10px;
+    border-radius: 5px;
+    background-color: rgb(147, 159, 194);
+  }
+
+  /* 定义滚动条的轨道 */
+  &::-webkit-scrollbar-track {
+    border: 1px solid #eee;
+  }
+
+  /* 定义轨道两端的按钮 */
+  &::-webkit-scrollbar-button {
+    background: #e0e0e0;
+  }
+
+  /*	给小滑块添加hover事件，鼠标悬浮在滑块上面的样式 */
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(191, 184, 187);
+  }
+}
+
+
+/**修改input框提示文字颜色 */
+// @mixin form_item {
+//   margin-top: 0.8rem;
+//   background: #F1F1F1;
+//   border-radius: 0.5rem;
+
+//   ::v-deep .van-field__control {
+//     font-size: 0.9rem;
+//     font-weight: 500;
+//     text-indent: 0.3rem;
+
+//     &::-webkit-input-placeholder {
+//       color: #888D9A;
+//       font-size: 0.9rem;
+//       font-weight: 500;
+//     }
+//   }
+// }
+/* 框线颜色 */
+$border-color: rgba(119, 136, 153, 0.4);
+
+#app {
+  @include scroll;
+}
+
+.page {
+  &-center {
+    @include flex_align;
+    justify-content: center;
+  }
+}
+
+.container {
+  &-shadow {
+    box-shadow: 0 0 10px 3px #eee;
+  }
+}
+
+.w100 {
+  width: 100%;
+}
+
+.laosu {
+  height: 100%;
+  // background: #ADD8E6;
+
+  &_header {
+    @include flex_align;
+    justify-content: space-between;
+    position: relative;
+    height: 60px;
+    padding: 0 10px;
+    box-shadow: 0 0 6px 0 #708090;
+    background: #fff;
+    z-index: 1;
+  }
+
+  &_img {
+    height: 60px;
+  }
+
+  &_container {
+    display: flex;
+    flex: 1;
+    height: calc(100% - 60px);
+  }
+
+  &_menu {
+    width: 200px;
+    border-right: 1px solid $border-color;
+  }
+
+  &_content {
+    width: calc(100% - 180px);
+    margin: 10px;
+    background: #eee;
+  }
+
+  &_crumbs {
+    @include flex_align;
+    padding: 5px;
+    border-bottom: 1px solid #333;
+    background: #fff;
+
+    &_item {
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+}

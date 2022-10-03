@@ -1,25 +1,66 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHashHistory } from "vue-router";
+import store from "../store/index";
+import layout from "../page/index/layout";
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/login",
+    name: "login",
+    component: () => import("../page/login/login"),
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+    path: "/",
+    name: "layout",
+    component: layout,
+    //默认进入重定向页面
+    // redirect:'/',
+    children: [
+      {
+        path: "/vue",
+        name: "vue",
+        component: () => import("../views/vue/index"),
+      },
+      {
+        path: "/js",
+        name: "js",
+        component: () => import("../views/js/index"),
+      },
+    ],
+  },
+  {
+    path: "/music",
+    name: "music",
+    component: layout,
+    children: [
+      {
+        path: "/music/list",
+        name: "musicList",
+        component: () => import("../views/music/index"),
+      },
+    ],
+  },
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
-})
+  routes,
+});
+// const store = useStore();
 
-export default router
+/**路由拦截
+ * @param to 下一个页面/即将要进入的目标
+ * @param form 当前页面
+ * @param next 执行下一步操作
+ */
+router.beforeEach((to, form, next) => {
+  if (store.getters.isLogin) {
+    next();
+  } else {
+    if (to.path === "/login") {
+      next();
+    } else {
+      next("/login");
+    }
+  }
+});
+export default router;
