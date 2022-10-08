@@ -6,7 +6,10 @@
         class="laosu_img"
         src="@/assets/logo.png"
       />
-      <el-button @click="loginOut">登出</el-button>
+      <el-button
+        size="default"
+        @click="loginOut"
+      >登出</el-button>
     </div>
     <!-- 菜单及内容信息 -->
     <div class="laosu_container">
@@ -31,6 +34,8 @@
 import { reactive, toRaw, toRefs } from 'vue-demi'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { ElMessage, ElMessageBox } from "element-plus";
+import { clearLocaStore, clearSessionStore, } from "../../util/localStorage";
 import Menu from './menu'
 import Crumbs from './crumbs'
 
@@ -47,10 +52,24 @@ export default {
     })
 
     const loginOut = () => {
-      //存入登陆状态
-      store.commit('setLoginState', false)
-      //跳转
-      router.replace('/login')
+      ElMessageBox.confirm("是否确认退出", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          ElMessage.info("您已登出系统，期待下次再来");
+          //清空所有本地缓存
+          clearSessionStore();
+          clearLocaStore()
+          //跳转
+          router.replace('/login')
+        })
+        .catch(() => {
+          console.log(2);
+          ElMessage.info("已取消登出");
+        });
+
     }
 
     return {

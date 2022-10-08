@@ -10,6 +10,8 @@ const getters = {
   userMenu: (state) => state.user.userMenu,
   /**面包屑 */
   crumbs: (state) => state.system.crumbs,
+  /**白名单本地缓存 */
+  whiteListCache: (state) => state.system.whiteListCache,
 };
 
 export default createStore({

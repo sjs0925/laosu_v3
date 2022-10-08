@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import store from "../store/index";
+import store from "@/store/index";
 import layout from "../page/index/layout";
 
 const routes = [
@@ -10,7 +10,7 @@ const routes = [
   },
   {
     path: "/",
-    name: "layout",
+    name: "学习",
     component: layout,
     //默认进入重定向页面
     // redirect:'/',
@@ -29,12 +29,12 @@ const routes = [
   },
   {
     path: "/music",
-    name: "music",
+    name: "听歌",
     component: layout,
     children: [
       {
         path: "/music/list",
-        name: "musicList",
+        name: "音乐",
         component: () => import("../views/music/index"),
       },
     ],

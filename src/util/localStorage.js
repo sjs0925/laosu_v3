@@ -1,9 +1,15 @@
+import { useStore } from "vuex";
+
+const store = useStore();
 /**缓存名关键字 */
 const keyName = "laosu_";
 /**用于需要持久化存储在本地的数据 */
-export const setLocaStore = (params = {}) => {
+export const setLocaStore = (params = {}, whiteList = false) => {
   let { name, content } = params;
   name = keyName + name;
+  if (whiteList) {
+    store.commit("setWhiteListCache", name);
+  }
   const obj = { name, content };
   window.localStorage.setItem(name, JSON.stringify(obj));
 };
@@ -17,7 +23,11 @@ export const removeLocaStore = (name) => {
 };
 
 export const clearLocaStore = () => {
+  const arr = getLocaStore("whiteListCache").map((item) => {
+    return item;
+  });
   window.localStorage.clear();
+  arr.map((item) => setLocaStore(item, true));
 };
 
 /**用于临时存储在本地的数据 */

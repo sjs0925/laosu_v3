@@ -32,6 +32,13 @@ export default {
     const handleClose = (path) => {
       store.commit('delCrumbs', path)
       state.crumbsList = store.getters.crumbs
+      let crumbsLength = state.crumbsList.length
+      if (crumbsLength === 0) {
+        router.push('/')
+      } else {
+        router.push(state.crumbsList[crumbsLength - 1].path)
+      }
+
     }
 
     const handleJump = path => {
