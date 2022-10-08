@@ -66,7 +66,6 @@ export default {
           router.replace('/login')
         })
         .catch(() => {
-          console.log(2);
           ElMessage.info("已取消登出");
         });
 
