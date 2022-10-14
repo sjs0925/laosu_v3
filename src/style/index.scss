@@ -1,20 +1,20 @@
 /**垂直居中 */
-@mixin flex_align {
+@mixin flex-align {
   display: flex;
   align-items: center;
 }
 
 /**文字产出部分显示... */
-@mixin text_hidden {
+@mixin text-hidden {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 /**文本缩进 */
-@mixin text_indent {
+@mixin text-indent($text-indent: 10px) {
   display: inline-block;
-  text-indent: 10px;
+  text-indent: $text-indent;
 }
 
 /* 全局滚动条样式*/
@@ -51,14 +51,26 @@
   }
 }
 
+//动画放大
+@mixin enlarge ($scale: 1.1) {
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+//禁止选中
+@mixin selec-none {
+  user-select: none
+}
+
 
 /**修改input框提示文字颜色 */
-// @mixin form_item {
+// @mixin form-item {
 //   margin-top: 0.8rem;
 //   background: #F1F1F1;
 //   border-radius: 0.5rem;
 
-//   ::v-deep .van-field__control {
+//   ::v-deep .van-field--control {
 //     font-size: 0.9rem;
 //     font-weight: 500;
 //     text-indent: 0.3rem;
@@ -79,7 +91,7 @@ $border-color: rgba(119, 136, 153, 0.4);
 
 .page {
   &-center {
-    @include flex_align;
+    @include flex-align;
     justify-content: center;
   }
 }
@@ -98,8 +110,8 @@ $border-color: rgba(119, 136, 153, 0.4);
   height: 100%;
   // background: #ADD8E6;
 
-  &_header {
-    @include flex_align;
+  &-header {
+    @include flex-align;
     justify-content: space-between;
     position: relative;
     height: 60px;
@@ -107,38 +119,67 @@ $border-color: rgba(119, 136, 153, 0.4);
     box-shadow: 0 0 6px 0 #708090;
     background: #fff;
     z-index: 1;
+    @include selec-none;
   }
 
-  &_img {
+  &-img {
     height: 60px;
+    @include selec-none;
   }
 
-  &_container {
+  &-container {
     display: flex;
     flex: 1;
     height: calc(100% - 60px);
   }
 
-  &_menu {
+  &-menu {
     width: 200px;
     border-right: 1px solid $border-color;
+    @include selec-none;
   }
 
-  &_content {
-    width: calc(100% - 180px);
-    margin: 10px;
+  &-content {
+    width: calc(100% - 200px);
+    height: 100%;
     background: #eee;
   }
 
-  &_crumbs {
-    @include flex_align;
-    padding: 5px;
+  &-page {
+    height: calc(100% - 76px);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    overflow: auto;
+    @include scroll;
+  }
+
+  &-crumbs {
+    @include flex-align;
+    padding: 10px 5px 5px 5px;
     border-bottom: 1px solid #333;
     background: #fff;
+    @include selec-none;
 
-    &_item {
-      margin-right: 5px;
+
+    &-item {
+      @include enlarge;
+      margin-right: 10px;
       cursor: pointer;
     }
+  }
+
+  &-theme {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    padding: 10px;
+    border-top-right-radius: 21px;
+    border-bottom-right-radius: 21px;
+    box-shadow: 1px 0 5px 1px #333;
+    background: #fff;
+    z-index: 1000;
+    cursor: move;
   }
 }

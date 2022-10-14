@@ -1,24 +1,15 @@
 <template>
-  <div>
-    js页面
+  <div class="demo-collapse">
+    <el-collapse
+      v-model="activeName"
+      accordion
+    >
+    </el-collapse>
   </div>
 </template>
 
-<script>
-import { reactive, toRefs } from 'vue'
+<script setup>
+import { ref } from "vue";
 
-export default {
-  setup() {
-    const state = reactive({
-      count: 0,
-    })
-
-    return {
-      ...toRefs(state),
-    }
-  }
-}
+const activeName = ref("");
 </script>
-
-<style lang="scss" scoped>
-</style>

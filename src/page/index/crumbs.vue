@@ -1,14 +1,18 @@
 <template>
-  <div class="laosu_crumbs">
+  <div class="laosu-crumbs">
     <el-tag
-      class="laosu_crumbs_item"
+      class="laosu-crumbs-item"
+      size="small"
+      :effect="nowPath('/')?'dark':'light'"
       @click="handleJump('/')"
     >首页</el-tag>
     <el-tag
-      class="laosu_crumbs_item"
+      class="laosu-crumbs-item"
       closable
       v-for="(item ,index) in crumbsList"
+      size="small"
       :key="index"
+      :effect="nowPath(item.path)?'dark':'light'"
       @close='handleClose(item.path)'
       @click="handleJump(item.path)"
     >{{item.name}}</el-tag>
@@ -18,27 +22,34 @@
 <script>
 import { reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
-  setup() {
+  setup(props, { emit }) {
     const store = useStore()
     const router = useRouter()
-
+    const route = useRoute()
     const state = reactive({
       crumbsList: store.getters.crumbs
     })
 
-    const handleClose = (path) => {
+    const nowPath = (data) => {
+      return data === route.path
+
+    }
+
+    const handleClose = path => {
       store.commit('delCrumbs', path)
       state.crumbsList = store.getters.crumbs
       let crumbsLength = state.crumbsList.length
+      let jumpPath
       if (crumbsLength === 0) {
-        router.push('/')
+        jumpPath = '/'
       } else {
-        router.push(state.crumbsList[crumbsLength - 1].path)
+        jumpPath = state.crumbsList[crumbsLength - 1].path
       }
-
+      router.push(jumpPath)
+      emit('handleMenu', jumpPath, path)
     }
 
     const handleJump = path => {
@@ -48,7 +59,8 @@ export default {
     return {
       ...toRefs(state),
       handleClose,
-      handleJump
+      handleJump,
+      nowPath
     }
   }
 }

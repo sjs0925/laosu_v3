@@ -1,9 +1,10 @@
 <template>
+  <!-- <CustomConfig></CustomConfig> -->
   <div class="laosu">
     <!-- 头部信息 -->
-    <div class="laosu_header">
+    <div class="laosu-header">
       <img
-        class="laosu_img"
+        class="laosu-img"
         src="@/assets/logo.png"
       />
       <el-button
@@ -12,18 +13,22 @@
       >登出</el-button>
     </div>
     <!-- 菜单及内容信息 -->
-    <div class="laosu_container">
+    <div class="laosu-container">
       <!-- 菜单 -->
-      <div class="laosu_menu">
-        <Menu :menuData='menu'></Menu>
+      <div class="laosu-menu">
+        <Menu
+          ref="menuRef"
+          :menuData='menu'
+        ></Menu>
       </div>
       <!-- 网页主体 -->
-      <div class="laosu_content">
+      <div class="laosu-content">
         <!-- 面包屑 -->
-        <Crumbs></Crumbs>
-        <!-- 人有冲天之志，非运不能自通 -->
+        <Crumbs @handleMenu='handleMenu'></Crumbs>
+        <div class="laosu-page">
+          <router-view></router-view>
+        </div>
 
-        <router-view></router-view>
       </div>
 
     </div>
@@ -31,18 +36,20 @@
 </template>
 
 <script>
-import { reactive, toRaw, toRefs } from 'vue-demi'
+import { reactive, ref, toRaw, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { ElMessage, ElMessageBox } from "element-plus";
 import { clearLocaStore, clearSessionStore, } from "../../util/localStorage";
 import Menu from './menu'
 import Crumbs from './crumbs'
+import CustomConfig from './custom-config'
 
 export default {
   components: {
     Menu,
-    Crumbs
+    Crumbs,
+    CustomConfig
   },
   setup() {
     const router = useRouter()
@@ -50,7 +57,7 @@ export default {
     const state = reactive({
       menu: toRaw(store.getters.userMenu)
     })
-
+    /**登出 */
     const loginOut = () => {
       ElMessageBox.confirm("是否确认退出", {
         confirmButtonText: "确定",
@@ -70,10 +77,16 @@ export default {
         });
 
     }
+    const menuRef = ref(null)
+    const handleMenu = (openPath) => {
+      menuRef.value.handleMenu(openPath)
+    }
 
     return {
       ...toRefs(state),
       loginOut,
+      handleMenu,
+      menuRef,
     }
   }
 }

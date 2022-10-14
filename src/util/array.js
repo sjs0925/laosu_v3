@@ -1,7 +1,8 @@
 /**
  * 往数组尾添加新值，若存在重复值，则删除之前的值
- * @param {*} e 需要添加的值
- * @param {*} key 若e为对象，需要指定唯一标识用作判断
+ * @param e 需要添加的值
+ * @param key 若e为对象，需要指定唯一标识用作判断
+ * @param flag 是否在找到重复值时删除该值
  * @returns
  */
 const pushNewData = () => {

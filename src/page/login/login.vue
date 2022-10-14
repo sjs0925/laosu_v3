@@ -38,6 +38,7 @@
 import { reactive, toRefs } from 'vue-demi'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { ElMessage } from "element-plus";
 export default {
   setup() {
     const router = useRouter()
@@ -46,27 +47,17 @@ export default {
     let data = reactive({
       form: {
         name: '',
-        password: ''
+        password: '',
       }
     })
 
     /**登录 */
     const login = () => {
+      ElMessage.success('登陆成功')
       //存入登陆状态
       store.commit('setLoginState', true)
-      
-      //存入用户菜单
-      store.commit('setUserMenu', router.options.routes.filter(item => item.path !== '/login').map(item => {
-        return {
-          name: item.name,
-          path: item.path,
-          children: item.children
-        }
-      }))
-      //跳转
       router.replace('/')
     }
-
 
     return {
       ...toRefs(data),

@@ -1,10 +1,9 @@
 <template>
-  <!-- <customConfig></customConfig> -->
   <router-view />
 </template>
 
 <script setup>
-import customConfig from '@/components/custom-config'
+
 
 </script>
 <style>

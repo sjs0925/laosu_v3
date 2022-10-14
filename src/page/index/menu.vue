@@ -1,7 +1,10 @@
 <template>
   <el-menu
-    :unique-opened='true'
+    ref="menuRef"
     router
+    :unique-opened='true'
+    :default-active='activeIndex'
+    :default-openeds='defaultOpenedsArray'
   >
     <template
       v-for="(item,index) of menu"
@@ -12,13 +15,14 @@
         :index="item.path"
       >
         <template #title>
-          <span>{{item.name}}</span>
+          <span>{{item.name}}
+          </span>
         </template>
         <el-menu-item
           v-for="cItem of item.children"
           :key="cItem.path"
           :index="cItem.path"
-          @click="handleMenu($event,cItem.name)"
+          @click="openPage($event,cItem.name)"
         >
           <template #title>
             {{cItem.name}}
@@ -28,7 +32,7 @@
       <el-menu-item
         v-else
         :index="item.path"
-        @click="handleMenu($event,item.name)"
+        @click="openPage($event,item.name)"
       >
         <template #title>
           {{item.name}}
@@ -39,7 +43,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { reactive, ref, toRefs } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -51,12 +55,15 @@ export default {
   },
   setup(props) {
     const store = useStore()
-
+    const menuRef = ref(null)
     const state = reactive({
       menu: props.menuData,
+      activeIndex: '',
+      defaultOpenedsArray: []
 
     })
-    const handleMenu = (e, name) => {
+    /**打开指定页面 */
+    const openPage = (e, name) => {
       store.commit('setCrumbs',
         {
           path: e.index,
@@ -64,10 +71,18 @@ export default {
         }
       )
     }
+    /**自动 打开/关闭 页面 */
+    const handleMenu = (openPath) => {
+      state.activeIndex = openPath
+      if (openPath === '/') {
+        // state.defaultOpenedsArray = ['/']
+      }
+    }
     return {
       ...toRefs(state),
+      openPage,
       handleMenu,
-
+      menuRef
     }
   }
 }
