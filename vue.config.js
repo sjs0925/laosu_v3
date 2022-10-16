@@ -30,4 +30,12 @@ module.exports = defineConfig({
       }),
     ],
   },
+  css: {
+    // css预设器配置项
+    loaderOptions: {
+      sass: {
+        additionalData: `@import '@/style/laosu.scss';`,
+      },
+    },
+  },
 });

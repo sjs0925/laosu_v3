@@ -35,7 +35,7 @@
   </el-config-provider>
 </template>
  <script>
-import { reactive, toRefs } from 'vue-demi'
+import { reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { ElMessage } from "element-plus";

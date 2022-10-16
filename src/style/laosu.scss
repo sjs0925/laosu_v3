@@ -1,0 +1,92 @@
+/**垂直居中 */
+@mixin flex-align {
+  display: flex;
+  align-items: center;
+}
+
+/**文字产出部分显示... */
+@mixin text-hidden {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/**文本缩进 */
+@mixin text-indent($text-indent: 10px) {
+  display: inline-block;
+  text-indent: $text-indent;
+}
+
+/* 全局滚动条样式*/
+@mixin scroll {
+
+  /* 修改滚动条样式 */
+  &::-webkit-scrollbar {
+    /* width height分别对应竖向滚动条和横向滚动条 */
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+  }
+
+  /* 修改滚动条中的小滑块 */
+  &::-webkit-scrollbar-thumb {
+    width: 10px;
+    border-radius: 5px;
+    background-color: rgb(147, 159, 194);
+  }
+
+  /* 定义滚动条的轨道 */
+  &::-webkit-scrollbar-track {
+    border: 1px solid #eee;
+  }
+
+  /* 定义轨道两端的按钮 */
+  &::-webkit-scrollbar-button {
+    background: #e0e0e0;
+  }
+
+  /*	给小滑块添加hover事件，鼠标悬浮在滑块上面的样式 */
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(191, 184, 187);
+  }
+}
+
+//动画放大
+@mixin enlarge ($scale: 1.1) {
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+//禁止选中
+@mixin selec-none {
+  user-select: none
+}
+
+@mixin block($color, $radius: 5px) {
+  padding: 5px;
+  border-radius: $radius;
+  background: $color;
+}
+
+
+/**修改input框提示文字颜色 */
+// @mixin form-item {
+//   margin-top: 0.8rem;
+//   background: #F1F1F1;
+//   border-radius: 0.5rem;
+
+//   ::v-deep .van-field--control {
+//     font-size: 0.9rem;
+//     font-weight: 500;
+//     text-indent: 0.3rem;
+
+//     &::-webkit-input-placeholder {
+//       color: #888D9A;
+//       font-size: 0.9rem;
+//       font-weight: 500;
+//     }
+//   }
+// }
+/* 框线颜色 */
+$border-color: rgba(119, 136, 153, 0.4);

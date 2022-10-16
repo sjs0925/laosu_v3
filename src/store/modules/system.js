@@ -68,18 +68,19 @@ const system = {
                 },
               ],
             },
-            // {
-            //   name: "听歌",
-            //   path: "/music",
-            //   component: () => import("@/page/index/layout"),
-            //   children: [
-            //     {
-            //       path: "/music/list",
-            //       name: "音乐",
-            //       component: () => import("@/views/music/index"),
-            //     },
-            //   ],
-            // },
+            {
+              name: "技术文档",
+              path: "/document",
+              component: () => import("@/page/index/layout"),
+              redirect: "/document/index",
+              children: [
+                {
+                  path: "/document/index",
+                  name: "文档",
+                  component: () => import("@/views/document/index"),
+                },
+              ],
+            },
           ];
           resolve(laosu_menu);
           commit("SET_MENU", laosu_menu);

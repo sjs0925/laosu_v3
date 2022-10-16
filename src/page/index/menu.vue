@@ -11,7 +11,7 @@
       :key="index"
     >
       <el-sub-menu
-        v-if="item.children"
+        v-if="item.children.length>1"
         :index="item.path"
       >
         <template #title>
@@ -29,6 +29,8 @@
           </template>
         </el-menu-item>
       </el-sub-menu>
+
+
       <el-menu-item
         v-else
         :index="item.path"
@@ -38,6 +40,10 @@
           {{item.name}}
         </template>
       </el-menu-item>
+
+
+
+
     </template>
   </el-menu>
 </template>
